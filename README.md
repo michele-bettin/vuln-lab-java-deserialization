@@ -128,8 +128,10 @@ The app will contact:
 -   Reachability determines if code is used
 -   Exploitability requires user-controlled input
 
-👉 In this project: - Many CVEs detected ❌ - Few reachable ⚠️ - One
-truly exploitable ✅
+👉 In this project: 
+- Many CVEs detected ❌
+- Few reachable ⚠️
+- One truly exploitable ✅
 
 ------------------------------------------------------------------------
 
