@@ -70,8 +70,7 @@ public class App {
 
     // Metodo vulnerabile: deserializza YAML da input esterno
     public static void yamlExample2(String yamlStr) {
-        Yaml yaml = new Yaml();
-        Object obj = yaml.load(yamlStr);  // <-- Punto vulnerabile
+        Object obj = YamlProcessor.loadYaml(yamlStr);  // <-- Punto vulnerabile spostato in un altro file
         System.out.println("YAML parsed: " + obj);
     }
 }
