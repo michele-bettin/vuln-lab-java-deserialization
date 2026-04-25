@@ -70,8 +70,19 @@ public class App {
 
     // Metodo vulnerabile: deserializza YAML da input esterno
     public static void yamlExample2(String yamlStr) {
+
         YamlController controller = new YamlController();
-        Object obj = controller.processYaml(yamlStr);  // <-- Chiamata ora passa attraverso controller e servizio
-        System.out.println("YAML parsed: " + obj);
+
+        // CASO 1 — processYaml: Class.forName con variabile → deve generare ReflectionWarning
+        Object obj = controller.processYaml(yamlStr);
+        System.out.println("YAML parsed (dynamic): " + obj);
+
+        // CASO 2 — loadKnownHelper: Class.forName con letterale → NON deve generare ReflectionWarning
+        controller.loadKnownHelper();
+        System.out.println("Known helper loaded (literal).");
+
+        // CASO 3 — processWithProxy: Proxy.newProxyInstance con variabile → deve generare ReflectionWarning
+        Object proxy = controller.processWithProxy(yamlStr);
+        System.out.println("Proxy created (dynamic): " + proxy);
     }
 }
