@@ -14,6 +14,13 @@ import java.util.Map;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -51,13 +58,17 @@ public class App {
 
     // Apache HTTP client
     public static void httpExample() throws Exception {
-        String response = Request.Get("http://example.com")
-                .connectTimeout(1000)
-                .socketTimeout(1000)
-                .execute()
-                .returnContent()
-                .asString();
-        System.out.println("HTTP response length: " + response.length());
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        
+        HttpGet request = new HttpGet("http://example.com");
+        
+        try (CloseableHttpResponse response = httpClient.execute(request)) {
+            HttpEntity entity = response.getEntity();
+            String body = EntityUtils.toString(entity);
+            System.out.println("HTTP response length: " + body.length());
+        } finally {
+            httpClient.close();
+        }
     }
 
     // Commons IO usage

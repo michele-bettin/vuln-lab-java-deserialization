@@ -36,13 +36,6 @@
             <version>2.9.0</version>
         </dependency>
 
-        <!-- log4j (log4shell vecchie versioni) -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.13.3</version>
-        </dependency>
-
         <!-- guava vecchia -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -71,7 +64,7 @@
             <version>1.17</version>
         </dependency>
 
-        <!-- bho senza dava errore -->
+        <!-- fluent-hc -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
