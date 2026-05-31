@@ -19,12 +19,12 @@ public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Starting vulnerable demo app...");
 
-        // Se viene passato un file YAML come argomento, lo usiamo per l'exploit
+        // If a YAML file is passed as an argument, we use it for the exploit.
         if (args.length > 0) {
             String yamlContent = new String(Files.readAllBytes(Paths.get(args[0])));
             yamlExample2(yamlContent);
         } else {
-            // Altrimenti esegui le demo normali
+            // Otherwise, run the normal demos
             jsonExample();
             yamlExample();
             httpExample();
@@ -41,7 +41,7 @@ public class App {
         System.out.println("JSON parsed: " + obj);
     }
 
-    // SnakeYAML usage - demo normale (non vulnerabile perché input fisso)
+    // SnakeYAML usage - not vulnerable, fixed input
     public static void yamlExample() {
         String yamlStr = "name: test";
         Yaml yaml = new Yaml();
@@ -68,20 +68,17 @@ public class App {
         System.out.println("IO result: " + result);
     }
 
-    // Metodo vulnerabile: deserializza YAML da input esterno
+    // Vulnerable method: deserialize YAML from an external input
     public static void yamlExample2(String yamlStr) {
 
         YamlController controller = new YamlController();
 
-        // CASO 1 — processYaml: Class.forName con variabile → deve generare ReflectionWarning
         Object obj = controller.processYaml(yamlStr);
         System.out.println("YAML parsed (dynamic): " + obj);
 
-        // CASO 2 — loadKnownHelper: Class.forName con letterale → NON deve generare ReflectionWarning
         controller.loadKnownHelper();
         System.out.println("Known helper loaded (literal).");
 
-        // CASO 3 — processWithProxy: Proxy.newProxyInstance con variabile → deve generare ReflectionWarning
         Object proxy = controller.processWithProxy(yamlStr);
         System.out.println("Proxy created (dynamic): " + proxy);
     }
